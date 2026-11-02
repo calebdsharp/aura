@@ -52,7 +52,7 @@ export const PersonalizeForm = () => {
       <Button type="submit" disabled={loading}>
         {loading ? "Personalizing..." : "Personalize my theme"}
       </Button>
-      {reason && <p>{reason}</p>}
+      {reason && <p>Theme updated: {reason}</p>}
       {error && <p>{error}</p>}
     </form>
   );

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/logout-button";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export const instant = false;
@@ -21,8 +20,10 @@ const Home = async () => {
         <h1 className="text-3xl font-bold">Aura</h1>
         <p>Your home page, themed for you.</p>
         {user ? (
-          <div className="space-y-2">
-            <p>Logged in as {user.email}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="min-w-0 flex-1 truncate">
+              Logged in as {user.email}
+            </p>
             <LogoutButton />
           </div>
         ) : (
@@ -30,9 +31,11 @@ const Home = async () => {
             Log in
           </Link>
         )}
-        <Button>Primary button</Button>
         <div>
-          <Link href="/settings" className="underline">
+          <Link
+            href="/settings"
+            className="inline-flex h-8 items-center gap-1.5 rounded-md bg-primary px-2.5 text-xs font-medium text-primary-foreground hover:bg-primary/80"
+          >
             Go to settings
           </Link>
         </div>

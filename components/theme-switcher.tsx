@@ -28,7 +28,7 @@ export const ThemeSwitcher = () => {
           Cool
         </Button>
       </div>
-      <div className="rounded-lg bg-background p-4 text-foreground">
+      <div className="rounded-lg border bg-card p-4 text-card-foreground">
         <p>Preview text</p>
         <Button>Primary button</Button>
       </div>

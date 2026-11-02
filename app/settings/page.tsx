@@ -5,7 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const SettingsPage = () => (
   <main className="min-h-screen bg-background text-foreground">
-    <div className="mx-auto max-w-3xl space-y-6 p-8">
+    <div className="mx-auto max-w-5xl px-4 py-8 space-y-8">
       <h1 className="text-3xl font-bold">Settings</h1>
       <p>Choose a theme for Aura.</p>
       <ThemeSwitcher />
