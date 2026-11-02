@@ -133,6 +133,9 @@
   --foreground: #292524;
   --primary: #c2410c;
   --primary-foreground: #ffffff;
+  --border: #e7dcc8;
+  --card: #fffbf2;
+  --card-foreground: #292524;
 }
 
 [data-theme="cool"] {
@@ -140,4 +143,7 @@
   --foreground: #0f172a;
   --primary: #0369a1;
   --primary-foreground: #ffffff;
+  --border: #dbeafe;
+  --card: #f8fbff;
+  --card-foreground: #0f172a;
 }

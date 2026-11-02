@@ -1,45 +1,47 @@
 "use client";
 
-import { createContext, useContext, useSyncExternalStore } from "react";
+import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 
-let currentTheme = "default";
-if (typeof window !== "undefined") {
-  currentTheme = localStorage.getItem("aura-theme") || "default";
-  document.documentElement.setAttribute("data-theme", currentTheme);
-}
-
-const listeners = new Set<() => void>();
-
-const subscribe = (callback: () => void) => {
-  listeners.add(callback);
-  return () => {
-    listeners.delete(callback);
-  };
-};
-
-const getSnapshot = () => currentTheme;
-const getServerSnapshot = () => "default";
-
-const setThemeValue = (theme: string) => {
-  currentTheme = theme;
-  localStorage.setItem("aura-theme", theme);
-  document.documentElement.setAttribute("data-theme", theme);
-  listeners.forEach((listener) => listener());
-};
+import { createClient } from "@/lib/supabase/client";
 
 type ThemeContextType = {
   theme: string;
-  setTheme: (theme: string) => void;
+  setTheme: (theme: string) => Promise<void>;
 };
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export const ThemeProvider = ({
+  children,
+  initialTheme,
+}: {
+  children: ReactNode;
+  initialTheme: string;
+}) => {
+  const [theme, setThemeState] = useState(initialTheme || "default");
+
+  const setTheme = async (newTheme: string) => {
+    if (newTheme === theme) return;
+
+    setThemeState(newTheme);
+    localStorage.setItem("aura-theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+
+    await supabase.from("profiles").upsert({
+      id: user.id,
+      theme: newTheme,
+    });
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: setThemeValue }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
