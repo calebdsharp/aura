@@ -9,13 +9,9 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-export const instant = false;
+import { getTheme } from "@/lib/themes";
 
-const themeLabels: Record<string, string> = {
-  default: "Default",
-  warm: "Warm",
-  cool: "Cool",
-};
+export const instant = false;
 
 const Home = async () => {
   await connection();
@@ -34,7 +30,7 @@ const Home = async () => {
       .single();
     if (data?.theme) theme = data.theme;
   }
-  const themeLabel = themeLabels[theme] ?? "Default";
+  const themeLabel = getTheme(theme).name;
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",

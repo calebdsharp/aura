@@ -1,6 +1,7 @@
 import { GoogleGenAI, ThinkingLevel } from "@google/genai";
+import { THEMES, THEME_IDS } from "@/lib/themes";
 
-const ALLOWED_THEMES = ["default", "warm", "cool"] as const;
+const ALLOWED_THEMES = THEME_IDS;
 
 export const POST = async (request: Request) => {
   try {
@@ -23,9 +24,13 @@ export const POST = async (request: Request) => {
         responseMimeType: "application/json",
         systemInstruction:
           "You are the personalization service for Aura, a home page app. " +
-          "Return only JSON with a theme field that is exactly one of: default, warm, cool, " +
-          "and a short reason field. Warm is cozy, earthy, and homey. Cool is calm, clean, and blue-toned. " +
-          "Default is neutral when neither fits clearly.",
+          "Return only JSON with a theme field that is exactly one of the theme ids below, " +
+          "and a short reason field. Pick the theme whose description best fits the user's interests; " +
+          "use Default when none fits clearly. Do not pick a light/dark mode and do not return colors. " +
+          THEMES.map(
+            (t) => `${t.id}: ${t.name} — ${t.description} (tags: ${t.tags.join(", ")})`,
+          ).join(" "),
+
         temperature: 0,
         thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
       },
