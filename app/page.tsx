@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { LogoutButton } from "@/components/logout-button";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export const instant = false;
+
+const themeLabels: Record<string, string> = {
+  default: "Default",
+  warm: "Warm",
+  cool: "Cool",
+};
 
 const Home = async () => {
   await connection();
@@ -15,72 +25,98 @@ const Home = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
+  let theme = "default";
+  if (user) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("theme")
+      .eq("id", user.id)
+      .single();
+    if (data?.theme) theme = data.theme;
+  }
+  const themeLabel = themeLabels[theme] ?? "Default";
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-5xl px-4 py-8 space-y-8">
-        <h1 className="text-3xl font-bold">Aura</h1>
-        <p>Your home page, themed for you.</p>
-        {user ? (
-          <div className="space-y-2">
-            <p>Logged in as {user.email}</p>
-            <LogoutButton />
+      <div className="mx-auto max-w-5xl space-y-10 px-4 py-10">
+        <section className="max-w-2xl space-y-4">
+          <p className="text-sm font-medium text-muted-foreground">
+            Welcome back
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Your home, in {themeLabel}.
+          </h1>
+          <p className="text-base leading-relaxed text-muted-foreground">
+            Aura shapes this page around your saved theme. Change it anytime in
+            Settings, or let it pick one from what you are into.
+          </p>
+          <div>
+            <Link
+              href="/settings"
+              className="inline-flex h-10 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+            >
+              Change your theme
+            </Link>
           </div>
-        ) : (
-          <Link href="/login" className="underline">
-            Log in
-          </Link>
-        )}
-        <Button>Primary button</Button>
-        <div>
-          <Link href="/settings" className="underline">
-            Go to settings
-          </Link>
-        </div>
+        </section>
 
-        <div className="grid gap-4 md:grid-cols-3 mt-8">
-          <Card>
+        <div className="grid gap-5 md:grid-cols-3">
+          <Card className="transition-shadow hover:shadow-md">
             <CardHeader>
               <CardTitle>Welcome back</CardTitle>
+              <CardDescription>Your theme, saved to your profile</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p>Logged in as {user?.email}</p>
+            <CardContent className="space-y-3">
               <p>
-                Your theme is saved to your profile, so it follows you on
-                refresh.
+                {user?.email
+                  ? `Signed in as ${user.email}.`
+                  : "You are signed in."}
               </p>
+              <p className="text-muted-foreground">
+                Your {themeLabel} theme follows you on refresh.
+              </p>
+              <Link
+                href="/settings"
+                className="text-sm font-medium text-primary hover:underline"
+              >
+                Change theme
+              </Link>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-md">
             <CardHeader>
               <CardTitle>Today</CardTitle>
+              <CardDescription>{today}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>
-                {new Date().toLocaleDateString("en-US", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-              <p>
-                This is a placeholder for now. A real calendar or weather widget
-                would go here next.
+              <p className="text-muted-foreground">
+                No calendar or weather is connected yet. This card will grow
+                when one is.
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-md">
             <CardHeader>
               <CardTitle>Make it yours</CardTitle>
+              <CardDescription>Pick a theme, or let Aura pick one</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p>
+            <CardContent className="space-y-3">
+              <p className="text-muted-foreground">
                 Change your theme, or let Gemini pick one from your interests.
               </p>
-              <a href="/settings" className="underline">
+              <Link
+                href="/settings"
+                className="text-sm font-medium text-primary hover:underline"
+              >
                 Go to Settings
-              </a>
+              </Link>
             </CardContent>
           </Card>
         </div>

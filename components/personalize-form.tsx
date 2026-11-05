@@ -52,8 +52,16 @@ export const PersonalizeForm = () => {
       <Button type="submit" disabled={loading}>
         {loading ? "Personalizing..." : "Personalize my theme"}
       </Button>
-      {reason && <p>{reason}</p>}
-      {error && <p>{error}</p>}
+      {reason && (
+        <p className="rounded-md bg-muted px-3 py-2 text-sm">
+          Theme updated: {reason}
+        </p>
+      )}
+      {error && (
+        <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {error}
+        </p>
+      )}
     </form>
   );
 };
