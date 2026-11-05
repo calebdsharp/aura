@@ -29,6 +29,7 @@ export type ThemeDefinition = {
   name: string;
   description: string;
   tags: string[];
+  recommendedStyleId: string;
   light: ThemeTokens;
   dark: ThemeTokens;
 };
@@ -77,6 +78,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Default",
     description: "Clean and neutral, light gray and ink.",
     tags: ["neutral", "calm"],
+    recommendedStyleId: "clean",
     light: tokens({
       bg: "#ffffff",
       fg: "#171717",
@@ -108,6 +110,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Warm",
     description: "Cream background, terracotta accents.",
     tags: ["warm", "soft"],
+    recommendedStyleId: "soft",
     light: tokens({
       bg: "#fdf6ec",
       fg: "#292524",
@@ -142,6 +145,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Cool",
     description: "Soft blue background, deep blue accents.",
     tags: ["cool", "calm"],
+    recommendedStyleId: "clean",
     light: tokens({
       bg: "#eff6ff",
       fg: "#0f172a",
@@ -176,6 +180,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Forest",
     description: "Deep greens, calm and grounded.",
     tags: ["nature", "calm"],
+    recommendedStyleId: "soft",
     light: tokens({
       bg: "#f0fdf4",
       fg: "#14532d",
@@ -210,6 +215,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Ocean",
     description: "Teal water, deep and refreshing.",
     tags: ["cool", "nature"],
+    recommendedStyleId: "clean",
     light: tokens({
       bg: "#ecfeff",
       fg: "#164e63",
@@ -244,6 +250,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Sunset",
     description: "Warm orange and pink, golden-hour light.",
     tags: ["warm", "bold"],
+    recommendedStyleId: "bold",
     light: tokens({
       bg: "#fff7ed",
       fg: "#431407",
@@ -278,6 +285,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Lavender",
     description: "Soft purple, quiet and gentle.",
     tags: ["soft", "calm"],
+    recommendedStyleId: "soft",
     light: tokens({
       bg: "#faf5ff",
       fg: "#3b0764",
@@ -312,6 +320,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Rose",
     description: "Soft pink with a deep rose accent.",
     tags: ["warm", "soft"],
+    recommendedStyleId: "soft",
     light: tokens({
       bg: "#fff1f2",
       fg: "#4c0519",
@@ -346,6 +355,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Mint",
     description: "Fresh green, light and crisp.",
     tags: ["fresh", "nature"],
+    recommendedStyleId: "clean",
     light: tokens({
       bg: "#ecfdf5",
       fg: "#022c22",
@@ -380,6 +390,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Amber",
     description: "Golden honey, warm and rich.",
     tags: ["warm", "bold"],
+    recommendedStyleId: "bold",
     light: tokens({
       bg: "#fffbeb",
       fg: "#451a03",
@@ -414,6 +425,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Slate",
     description: "Graphite gray, steady and understated.",
     tags: ["neutral", "cool"],
+    recommendedStyleId: "sharp",
     light: tokens({
       bg: "#f8fafc",
       fg: "#0f172a",
@@ -448,6 +460,7 @@ export const THEMES: ThemeDefinition[] = [
     name: "Citrus",
     description: "Bright lime, energetic and fresh.",
     tags: ["fresh", "bold"],
+    recommendedStyleId: "bold",
     light: tokens({
       bg: "#f7fee7",
       fg: "#1a2e05",
