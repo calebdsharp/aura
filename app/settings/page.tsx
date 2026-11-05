@@ -1,3 +1,4 @@
+import { ModeControl } from "@/components/mode-control";
 import { PersonalizeForm } from "@/components/personalize-form";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -18,6 +19,15 @@ const SettingsPage = () => (
         <p className="text-sm text-muted-foreground">
           Choose a preset. It applies right away and is saved to your profile.
         </p>
+        <div className="flex items-center justify-between gap-4 rounded-lg border bg-card px-4 py-3">
+          <div>
+            <p className="text-sm font-medium">Appearance</p>
+            <p className="text-sm text-muted-foreground">
+              Light or dark, for any theme. Saved on this device only.
+            </p>
+          </div>
+          <ModeControl />
+        </div>
         <ThemeSwitcher />
       </section>
 

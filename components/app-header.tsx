@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { LogoutButton } from "@/components/logout-button";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const AppHeader = ({ userEmail }: { userEmail: string | null }) => (
   <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
@@ -23,14 +24,17 @@ export const AppHeader = ({ userEmail }: { userEmail: string | null }) => (
           </nav>
         )}
       </div>
-      {userEmail && (
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="hidden max-w-[220px] truncate text-sm text-muted-foreground sm:block">
-            {userEmail}
-          </span>
-          <LogoutButton />
-        </div>
-      )}
+      <div className="flex min-w-0 items-center gap-3">
+        <ModeToggle />
+        {userEmail && (
+          <>
+            <span className="hidden max-w-[220px] truncate text-sm text-muted-foreground sm:block">
+              {userEmail}
+            </span>
+            <LogoutButton />
+          </>
+        )}
+      </div>
     </div>
   </header>
 );

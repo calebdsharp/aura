@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import { AppHeader } from "@/components/app-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { createClient } from "@/lib/supabase/server";
+import { getTheme, themeCssProperties } from "@/lib/themes";
 
 import "./globals.css";
 import { connection } from "next/server";
@@ -47,9 +48,16 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       .single();
     if (data?.theme) initialTheme = data.theme;
   }
+  // Unknown stored ids fall back to Default; mode is device-local, so the
+  // server always renders the light tokens for first paint.
+  initialTheme = getTheme(initialTheme).id;
 
   return (
-    <html lang="en" data-theme={initialTheme}>
+    <html
+      lang="en"
+      data-theme={initialTheme}
+      style={themeCssProperties(initialTheme, "light")}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased`}
       >
