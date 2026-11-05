@@ -1,5 +1,6 @@
 import { ModeControl } from "@/components/mode-control";
 import { PersonalizeForm } from "@/components/personalize-form";
+import { StyleSwitcher } from "@/components/style-switcher";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
@@ -29,6 +30,16 @@ const SettingsPage = () => (
           <ModeControl />
         </div>
         <ThemeSwitcher />
+      </section>
+
+      <section className="space-y-4 border-t pt-8">
+        <h2 className="text-xl font-semibold tracking-tight">Style</h2>
+        <p className="text-sm text-muted-foreground">
+          How Aura feels: fonts, corners, shadows, and spacing. Each theme
+          recommends one, and you can pick a different one — it works with
+          any theme.
+        </p>
+        <StyleSwitcher />
       </section>
 
       <section className="space-y-4 border-t pt-8">
